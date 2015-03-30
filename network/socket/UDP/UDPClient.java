@@ -48,10 +48,13 @@ public class UDPClient {
                     e.printStackTrace();
                 }
                 if (received) {
-                        //输出数据
+
+                        printPacket(receive_packet);
                         //receive_packet的lenght要重新设置。
+                    receive_packet.setLength(1024);
                 } else {
                         //日志记录
+                    System.out.println("five time tries");
                 }
                 socket.close(); //这是必须的。
             }
@@ -63,5 +66,10 @@ public class UDPClient {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+    }
+    private static void printPacket(DatagramPacket packet) {
+        String str=new String(packet.getData(),0,packet.getLength())+"from"+
+                packet.getAddress()+":"+packet.getPort();
+        System.out.println(str);
     }
 }
